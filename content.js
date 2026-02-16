@@ -3,7 +3,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const textEl = document.getElementById("productTitle");
     const text = textEl ? textEl.textContent : "";
     sendResponse({ value: text });
-    return; // indicate async response
+    return; //indicate async response
   }
 
   if (message.type === "GET_SELLER_NAME") {
@@ -16,6 +16,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
     }
     sendResponse({ value: seller });
+    return;
+  }
+  if (message.type === "GET_SELLER_RATING") {
+    // Amazon sometimes uses dynamic IDs; match the first rating-count span we find
+    const el = document.querySelector('[id^="seller-rating-count-"] span');
+    const text = el ? el.textContent.trim() : '';
+
+    const ratings = text.match(/\((\d+)\s+ratings\)/);
+    const percentage = text.match(/(\d+)%\s+positive/);
+
+    const ratingsCount = ratings ? parseInt(ratings[1], 10) : null;
+    const ratingPercentage = percentage ? parseInt(percentage[1], 10) : null;
+    
+    sendResponse({value:[ratingsCount, ratingPercentage]});
     return;
   }
 });
