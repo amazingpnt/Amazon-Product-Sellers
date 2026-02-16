@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Product name",
+  "name": "Product Info",
   "version": "1.0.0",
-  "description": "Shows current product name",
+  "description": "Shows amazon product name, first seller and its rating",
   "permissions": ["activeTab"],
   "host_permissions": [
     "*://www.amazon.com/*"
