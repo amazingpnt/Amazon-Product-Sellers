@@ -3,27 +3,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const textEl = document.getElementById("productTitle");
     const text = textEl ? textEl.textContent : "";
     sendResponse({ value: text });
-    return; //indicate async response
-  }
-
-  if (message.type === "GET_SELLER_NAME") {
-    const el=document.querySelectorAll('[id^="aod-offer-soldBy"] .a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a');
-    sellerName=el[1].textContent;
-    sendResponse({ value: sellerName });
     return;
   }
-  if (message.type === "GET_SELLER_RATING") {
-    // Amazon sometimes uses dynamic IDs; match the first rating-count span we find
-    const el = document.querySelectorAll('[id^="seller-rating-count-"] span');
-    const text = el[1] ? el[1].textContent.trim() : '';
 
-    const ratings = text.match(/\((\d+)\s+ratings\)/);
-    const percentage = text.match(/(\d+)%\s+positive/);
-
-    const ratingsCount = ratings ? parseInt(ratings[1], 10) : null;
-    const ratingPercentage = percentage ? parseInt(percentage[1], 10) : null;
+  if (message.type === "GET_ALL_SELLERS") {
+    const sellerElements = document.querySelectorAll('[id^="aod-offer-soldBy"] .a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a');
+    const ratingElements = document.querySelectorAll('[id^="seller-rating-count-"] span');
     
-    sendResponse({value:[ratingsCount, ratingPercentage]});
+    let sellers = [];
+    
+    // Loop through all sellers
+    for (let i = 1; i < sellerElements.length; i++) {
+      const name = sellerElements[i] ? sellerElements[i].textContent.trim() : "";
+      const ratingText = ratingElements[i] ? ratingElements[i].textContent.trim() : '';
+      
+      const ratingsMatch = ratingText.match(/(\d+)\s+ratings/);
+      const percentageMatch = ratingText.match(/(\d+)%\s+positive/);
+      
+      const ratingsCount = ratingsMatch ? parseInt(ratingsMatch[1], 10) : null;
+      const ratingPercentage = percentageMatch ? parseInt(percentageMatch[1], 10) : null;
+      
+      sellers.push({
+        name: name,
+        ratingsCount: ratingsCount,
+        ratingPercentage: ratingPercentage
+      });
+    }
+    
+    sendResponse({ value: sellers });
     return;
   }
 });

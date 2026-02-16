@@ -2,11 +2,23 @@
 body {
     width: 500px;
     height: 300px;
-    margin: 8;
+    margin: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 div {
-    font-size:large
+    font-size: large;
+}
+
+#sellers {
+    max-height: 550px;
+}
+
+.seller-item {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
 }
 
 
