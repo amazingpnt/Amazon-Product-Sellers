@@ -15,7 +15,7 @@ function queryActiveTab(message, callback) {
  *   is an array the items will be matched by index, otherwise the whole value
  *   is used for every tag.
  */
-function requestData(requestType, tags) {
+function requestData(requestType, tags, textFormat) {
   queryActiveTab({ type: requestType }, (response) => {
     // determine the base value(s) returned by the content script
     const val = response && response.value !== undefined ? response.value : "";
@@ -30,14 +30,14 @@ function requestData(requestType, tags) {
       } else {
         text = val;
       }
-
-      el.textContent += text;
+      if(textFormat) el.textContent=text+el.textContent;
+      else el.textContent += text;
     });
   });
 }
 
 // usage examples
-requestData("GET_PRODUCT_NAME", ["productName"]);
-requestData("GET_SELLER_NAME", ["sellerName"]);
-requestData("GET_SELLER_RATING", ["sellerCount", "sellerPercentage"]);
+requestData("GET_PRODUCT_NAME", ["productName"], 0);
+requestData("GET_SELLER_NAME", ["sellerName"], 0);
+requestData("GET_SELLER_RATING", ["sellerCount", "sellerPercentage"], 1);
 
