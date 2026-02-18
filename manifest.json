@@ -1,22 +1,22 @@
 {
   "manifest_version": 3,
-  "name": "Amazon Seller Optimizer",
-  "version": "1.0.0",
-  "description": "Shows all amazon product seller names, ratings and rating percentage.",
-  "permissions": ["activeTab"],
-  "host_permissions": [
-    "*://www.amazon.com/*"
+  "name":"yt",
+  "version":"1.0.0",
+  "description":"works",
+  "permissions":["activeTab"],
+  "host_permissions":[
+    "*://www.youtube.com/*"
   ],
-  "content_scripts": [
+  "content_scripts":[
     {
       "matches": [
-        "*://www.amazon.com/*/dp/*"
+        "*://www.youtube.com/watch?v=*"
       ],
-      "js": ["content.js"],
-      "run_at": "document_idle"
+      "js":["content.js"],
+      "run_at":"document_idle"
     }
   ],
-  "action": {
-    "default_popup": "popup/popup.html"
+  "action":{
+    "default_popup":"popup/popup.html"
   }
 }
