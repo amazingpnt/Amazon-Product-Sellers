@@ -1,6 +1,26 @@
+
 body {
-    height: 100px;
-    width: 200px;
-    margin-left: 8px;
-    font-size:large;
+    width: 550px;
+    height: 200px;
+    margin: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+
+div {
+    font-size: large;
+}
+
+#sellers {
+    max-height: 550px;
+}
+
+.seller-item {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+}
+
+
+ 
+
