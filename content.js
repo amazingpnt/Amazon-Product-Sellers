@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
     let sellers=[];
     
     // Loop through all sellers
-    for(let i=0; i<sellerElements.length; i++) {
+    for(let i=0; i<sellerElements.length; i++){
       const name=sellerElements[i]? sellerElements[i].textContent.trim():"";
       const ratingText=ratingElements[i]? ratingElements[i].textContent.trim():'';
       
@@ -33,9 +33,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
     sendResponse({value:sellers});
     return;
   }
-
-  if(message.type=="SCROLL_TO_SELLER"){
-    sellerWindow=document.getElementById("all-offers-display-scroller");
-    sellerWindow.scrollBy({top:200, behavior:"smooth"});
+  if(message.type==="SCROLL_TO_SELLER"){
+    const sellerIndex=message.sellerIndex;
+    const sellerElements=document.querySelectorAll('[id^="aod-offer-soldBy"]');
+    sellerElements[sellerIndex].scrollIntoView({behavior:"smooth", block:"start"});
+    }
   }
-});
+);
