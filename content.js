@@ -34,9 +34,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
     return;
   }
   if(message.type==="SCROLL_TO_SELLER"){
+    //Scroll to the seller
     const sellerIndex=message.sellerIndex;
-    const sellerElements=document.querySelectorAll('[id^="aod-offer-soldBy"]');
-    sellerElements[sellerIndex].scrollIntoView({behavior:"smooth", block:"start"});
+    const sellerElements=document.querySelectorAll('[id^="aod-offer-soldBy"] .a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a');
+    sellerElements[sellerIndex].scrollIntoView({behavior:"smooth", block:"center"});
+
+    //Set background color to red after scrolling
+    const sellerContainer=sellerElements[sellerIndex].closest('[id="aod-offer"]');
+    if(sellerContainer) sellerContainer.style.backgroundColor="red";
+    //Reset it after 2 seconds
+    setTimeout(()=>{
+    if(sellerContainer) sellerContainer.style.backgroundColor="";
+    }, 2000);
+
     }
   }
 );
