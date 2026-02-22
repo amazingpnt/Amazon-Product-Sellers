@@ -1,17 +1,17 @@
 function createSellerElements(sellers){
   const container=document.getElementById("sellers");
   
-  // Calculate score for each seller: (positive ratings+1)/(total ratings+2)
+  //Calculate score for each seller: (positive ratings+1)/(total ratings+2)
   const sellersWithScore=sellers.map((seller, index)=>{
     const positiveRatings=(seller.ratingPercentage*seller.ratingsCount)/100;
-    const score = (positiveRatings+1)/(seller.ratingsCount+2);
+    const score=(positiveRatings+1)/(seller.ratingsCount+2);
     return { ...seller, score, originalIndex:index};
   });
   
-  // Sort by descending score (best seller first)
+  //Sort by descending score (best seller first)
   sellersWithScore.sort((a, b)=>b.score-a.score);
   
-  // Display sellers
+  //Display sellers
   sellersWithScore.forEach((seller, i)=>{
     const div=document.createElement("div");
     div.className="seller-item";
@@ -37,7 +37,7 @@ function createSellerElements(sellers){
   });
 }
 
-// reusable helper that queries the active tab and sends the provided message
+//reusable helper that queries the active tab and sends the provided message
 function queryActiveTab(message, callback) {
   chrome.tabs.query({active:true, currentWindow:true },(tabs)=>{
     if (!tabs || !tabs[0]) return;
@@ -45,7 +45,7 @@ function queryActiveTab(message, callback) {
   });
 }
 
-// Fetch product name
+//Fetch product name
 queryActiveTab({type:"GET_PRODUCT_NAME"}, (response)=>{
   const productName=document.getElementById("productName");
   if(response && response.value){
