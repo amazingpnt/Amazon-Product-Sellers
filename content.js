@@ -1,6 +1,17 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
-  const ratingElements=document.querySelectorAll('[id^="seller-rating-count-"] span');
-  if(message.type==="GET_PRODUCT_NAME") {
+  //List all offers and filter null ones out
+  const allOffers=[document.getElementById("aod-pinned-offer")];
+  allOffers.push(...document.querySelectorAll("#aod-offer"));
+  const offers=allOffers.filter((offer)=>{
+      const ratingElement=offer.querySelector('[id^="seller-rating-count-"] span');
+      const nameElement=offer.querySelector(
+        "#aod-offer-soldBy .a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a"
+      );
+      const ratingText=ratingElement? ratingElement.textContent:"";
+      const name=nameElement? nameElement.textContent:"";
+      return ratingText && name;
+  })
+  if(message.type==="GET_PRODUCT_NAME"){
     const textEl=document.getElementById("productTitle");
     const text=textEl? textEl.textContent:"";
     sendResponse({value:text});
@@ -11,23 +22,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
     let sellers=[];
     
     //Loop through all sellers
-    for(let i=0; i<ratingElements.length; i++){
-      const name=ratingElements[i].closest("#aod-offer-soldBy").querySelector(
-        ".a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a"
-      ).textContent;
-      const ratingText=ratingElements[i]? ratingElements[i].textContent.trim():'';
-      
-      const ratingsMatch=ratingText.match(/(\d+)\s+ratings/);
-      const percentageMatch=ratingText.match(/(\d+)%\s+positive/);
-      
-      const ratingsCount=ratingsMatch? parseInt(ratingsMatch[1], 10): null;
-      const ratingPercentage=percentageMatch? parseInt(percentageMatch[1], 10): null;
-      
-      sellers.push({
-        name: name,
-        ratingsCount: ratingsCount,
-        ratingPercentage: ratingPercentage
-      });
+    for(let i=0; i<offers.length; i++){
+      const ratingElement=offers[i].querySelector('[id^="seller-rating-count-"] span');
+      const nameElement=offers[i].querySelector(
+        "#aod-offer-soldBy .a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a"
+      );
+      const ratingText=ratingElement? ratingElement.textContent:"";
+      const name=nameElement? nameElement.textContent:"";
+      if(ratingText && name){
+        const ratingsMatch=ratingText.match(/(\d+)\s+ratings/);
+        const percentageMatch=ratingText.match(/(\d+)%\s+positive/);
+        const ratingsCount=parseInt(ratingsMatch[1], 10);
+        const ratingPercentage=parseInt(percentageMatch[1], 10);
+
+        sellers.push({
+          name: name,
+          ratingsCount: ratingsCount,
+          ratingPercentage: ratingPercentage,
+        });
+      }
     }
     
     sendResponse({value:sellers});
@@ -36,10 +49,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
   if(message.type==="SCROLL_TO_SELLER"){
     //Scroll to the seller
     const sellerIndex=message.sellerIndex;
-    ratingElements[sellerIndex].scrollIntoView({behavior:"smooth", block:"center"});
+    offers[sellerIndex].scrollIntoView({behavior:"smooth", block:"center"});
 
     //Set background color to red after scrolling
-    const sellerContainer=ratingElements[sellerIndex].closest('[id="aod-offer"]')||ratingElements[sellerIndex].closest('[id="aod-pinned-offer"]');
+    const sellerContainer=offers[sellerIndex].closest('[id="aod-offer"]')||offers[sellerIndex].closest('[id="aod-pinned-offer"]');
     sellerContainer.style.backgroundColor="red";
     //Reset it after 2 seconds
     setTimeout(()=>{

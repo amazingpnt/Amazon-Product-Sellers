@@ -31,6 +31,7 @@ function createSellerElements(sellers){
       <span class="seller-rating">${seller.ratingsCount} ratings</span>
       <span>&nbsp;|&nbsp;</span>
       <span class="seller-percentage">${seller.ratingPercentage}% positive</span>
+
     `;
     
     container.appendChild(div);
