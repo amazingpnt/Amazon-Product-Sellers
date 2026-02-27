@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Amazon Seller Optimizer",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Shows the best rated amazon seller",
   "permissions": ["activeTab"],
   "host_permissions": [
