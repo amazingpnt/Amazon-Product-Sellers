@@ -2,6 +2,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
   //List all offers and filter null ones out
   const allOffers=[document.getElementById("aod-pinned-offer")];
   allOffers.push(...document.querySelectorAll("#aod-offer"));
+
   const offers=allOffers.filter((offer)=>{
       const ratingElement=offer.querySelector('[id^="seller-rating-count-"] span');
       const nameElement=offer.querySelector(
@@ -11,6 +12,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
       const name=nameElement? nameElement.textContent:"";
       return ratingText && name;
   })
+
   if(message.type==="GET_PRODUCT_NAME"){
     const textEl=document.getElementById("productTitle");
     const text=textEl? textEl.textContent:"";
@@ -27,6 +29,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
       const nameElement=offers[i].querySelector(
         "#aod-offer-soldBy .a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a"
       );
+      const priceWholeElement=offers[i].querySelector(".a-price-whole");
+      const priceFractionElement=offers[i].querySelector(".a-price-fraction");
+      const price=parseFloat(priceWholeElement.textContent+priceFractionElement.textContent);
+
       const ratingText=ratingElement? ratingElement.textContent:"";
       const name=nameElement? nameElement.textContent:"";
       if(ratingText && name){
@@ -39,6 +45,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
           name: name,
           ratingsCount: ratingsCount,
           ratingPercentage: ratingPercentage,
+          price: price
         });
       }
     }
@@ -46,6 +53,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
     sendResponse({value:sellers});
     return;
   }
+  
   if(message.type==="SCROLL_TO_SELLER"){
     //Scroll to the seller
     const sellerIndex=message.sellerIndex;
@@ -58,7 +66,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
     setTimeout(()=>{
     sellerContainer.style.backgroundColor="";
     }, 2000);
-
     }
   }
 );

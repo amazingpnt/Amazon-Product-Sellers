@@ -7,16 +7,16 @@
   "host_permissions": [
     "*://www.amazon.com/*"
   ],
-  "content_scripts": [
+  "content_scripts":[
     {
-      "matches": [
+      "matches":[
         "*://www.amazon.com/*/dp/*"
       ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
-  "action": {
+  "action":{
     "default_popup": "popup/popup.html"
   }
 }

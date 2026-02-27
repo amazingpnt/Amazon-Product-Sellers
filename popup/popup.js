@@ -17,6 +17,7 @@ function createSellerElements(sellers){
     div.className="seller-item";
     div.addEventListener("mouseenter", ()=>div.classList.add("hover"));
     div.addEventListener("mouseleave", ()=>div.classList.remove("hover"));
+    
     div.addEventListener("click", ()=>{
       queryActiveTab({type:"SCROLL_TO_SELLER", sellerIndex:seller.originalIndex}); 
       window.close();
@@ -31,6 +32,9 @@ function createSellerElements(sellers){
       <span class="seller-rating">${seller.ratingsCount} ratings</span>
       <span>&nbsp;|&nbsp;</span>
       <span class="seller-percentage">${seller.ratingPercentage}% positive</span>
+      <span>&nbsp;|&nbsp;</span>
+      <span class="seller-price">${seller.price}$</span>
+
 
     `;
     
