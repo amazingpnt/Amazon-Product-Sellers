@@ -50,14 +50,6 @@ function queryActiveTab(message, callback) {
   });
 }
 
-//Fetch product name
-queryActiveTab({type:"GET_PRODUCT_NAME"}, (response)=>{
-  const productName=document.getElementById("productName");
-  if(response && response.value){
-    productName.textContent="Product name: "+response.value;
-  }
-});
-
 //Request all sellers data from content.js
 queryActiveTab({type:"GET_ALL_SELLERS"}, (response)=>{
   const sellers=response && response.value? response.value: [];

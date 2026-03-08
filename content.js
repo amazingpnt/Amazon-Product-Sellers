@@ -1,4 +1,5 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
+
   //List all offers and filter null ones out
   const allOffers=[document.getElementById("aod-pinned-offer")];
   allOffers.push(...document.querySelectorAll("#aod-offer"));
@@ -13,12 +14,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
       return ratingText && name;
   })
 
-  if(message.type==="GET_PRODUCT_NAME"){
-    const textEl=document.getElementById("productTitle");
-    const text=textEl? textEl.textContent:"";
-    sendResponse({value:text});
-    return;
-  }
 
   if(message.type==="GET_ALL_SELLERS"){
     let sellers=[];
@@ -35,6 +30,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
 
       const ratingText=ratingElement? ratingElement.textContent:"";
       const name=nameElement? nameElement.textContent:"";
+
       if(ratingText && name){
         const ratingsMatch=ratingText.match(/(\d+)\s+ratings/);
         const percentageMatch=ratingText.match(/(\d+)%\s+positive/);
