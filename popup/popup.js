@@ -34,8 +34,6 @@ function createSellerElements(sellers){
       <span class="seller-percentage">${seller.ratingPercentage}% positive</span>
       <span>&nbsp;|&nbsp;</span>
       <span class="seller-price">${seller.price}$</span>
-
-
     `;
     
     container.appendChild(div);
@@ -45,12 +43,12 @@ function createSellerElements(sellers){
 //reusable helper that queries the active tab and sends the provided message
 function queryActiveTab(message, callback) {
   chrome.tabs.query({active:true, currentWindow:true },(tabs)=>{
-    if (!tabs || !tabs[0]) return;
+    if(!tabs || !tabs[0]) return;
     chrome.tabs.sendMessage(tabs[0].id, message, callback);
   });
 }
 
-//Request all sellers data from content.js
+//Request sellers data from content.js
 queryActiveTab({type:"GET_ALL_SELLERS"}, (response)=>{
   const sellers=response && response.value? response.value: [];
   console.log("Fetched sellers:", sellers);
@@ -61,4 +59,3 @@ queryActiveTab({type:"GET_ALL_SELLERS"}, (response)=>{
     console.warn("No sellers found");
   }
 });
-
