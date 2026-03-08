@@ -9,8 +9,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
       const nameElement=offer.querySelector(
         "#aod-offer-soldBy .a-fixed-left-grid .a-fixed-left-grid-inner .a-fixed-left-grid-col.a-col-right a"
       );
-      const ratingText=ratingElement.textContent;
-      const name=nameElement.textContent;
+      const ratingText=ratingElement? ratingElement.textContent:"";
+      const name=nameElement? nameElement.textContent:"";
       return ratingText && name;
   })
 
@@ -28,8 +28,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
       const priceFractionElement=offers[i].querySelector(".a-price-fraction");
       const price=parseFloat(priceWholeElement.textContent+priceFractionElement.textContent);
 
-      const ratingText=ratingElement.textContent;
-      const name=nameElement.textContent;
+      const ratingText=ratingElement? ratingElement.textContent:"";
+      const name=nameElement? nameElement.textContent:"";
 
       if(ratingText && name){
         const ratingsMatch=ratingText.match(/(\d+)\s+ratings/);
@@ -65,4 +65,3 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse)=>{
     }
   }
 );
-

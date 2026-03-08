@@ -1,31 +1,107 @@
-
 body {
-    width: 550px;
-    height: 200px;
-    margin: 8px;
-    overflow-y: auto;
+    width: 450px;
+    background-color: #f8fafc;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: #1e293b;
     overflow-x: hidden;
 }
 
-div {
-    font-size: large;
+header {
+    background: #ffffff;
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+h1 span {
+    color: #2563eb; /* Modern Blue */
 }
 
 #sellers {
-    max-height: 550px;
+    padding: 12px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
-.hover {
-    color:blue;
-    cursor:pointer;
+/* Scrollbar Styling */
+#sellers::-webkit-scrollbar {
+    width: 6px;
+}
+#sellers::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
 }
 
 .seller-item {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 8px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
+.seller-item:hover {
+    border-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    cursor: pointer;
+}
+
+/* UI Components for the JS injection */
+.badge-best {
+    position: absolute;
+    top: -10px;
+    right: 12px;
+    background: #facc15;
+    color: #713f12;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 2px solid white;
+    text-transform: uppercase;
+}
+
+.seller-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.seller-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #1e293b;
+}
+
+.seller-stats {
+    display: flex;
+    gap: 12px;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.seller-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #059669; /* Green */
+}
 
  
 
